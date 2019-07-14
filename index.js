@@ -1,49 +1,6 @@
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 // ********************************************************************************************************************
-// *************************** Paramétrage d'un objet FUSEE ***********************************************************
-// ********************************************************************************************************************
-x_fusee = 625;
-y_fusee = 650;
-rayon_fusee = 25;
-angle_depart_fusee = 0;
-angle_fin_fusee = Math.PI*2;
-sens_trace_fusee = false; // Par défaut: sens des aiguilles d'une montre
-function drawFusee (){
-    ctx.beginPath();
-    ctx.arc(x_fusee, y_fusee, rayon_fusee, angle_depart_fusee, angle_fin_fusee, sens_trace_fusee);
-    ctx.fillStyle = "blue";
-    ctx.fill();
-    ctx.closePath();
-}
-// ********************************************************************************************************************
-// **************************** Paramétrage des objets BOULE **********************************************************
-// ********************************************************************************************************************
-function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
-}
-x_boule_rouge = canvas.width;
-y_boule_rouge = getRandomInt(canvas.width);
-rayon_boule_rouge = 25;
-angle_depart_boule_rouge = 0;
-angle_fin_boule_rouge = Math.PI*2;
-sens_trace_boule_rouge = false; // Par défaut: sens des aiguilles d'une montre
-function drawBouleRouge (){
-    ctx.beginPath();
-    ctx.arc(x_boule_rouge, y_boule_rouge, rayon_boule_rouge, angle_depart_boule_rouge, angle_fin_boule_rouge, sens_trace_boule_rouge);
-    ctx.fillStyle = "red";
-    ctx.fill();
-    ctx.closePath();
-}
-/*
-function drawBouleVerte (){
-    ctx.beginPath();
-    ctx.arc(x_boule, y_boule, rayon_boule, angle_depart_boule, angle_fin_boule, sens_trace_boule);
-    ctx.fillStyle = "red";
-    ctx.fill();
-    ctx.closePath();
-}*/
-// ********************************************************************************************************************
 // ******************************** Gestion events clavier ************************************************************
 // ********************************************************************************************************************
 document.addEventListener("keydown", keyDownHandler, false);
@@ -83,27 +40,90 @@ function keyUpHandler(e) {
     }
 }
 // ********************************************************************************************************************
+// *************************** Paramétrage d'un objet FUSEE ***********************************************************
+// ********************************************************************************************************************
+x_fusee = 625;
+y_fusee = 650;
+largeur_fusee = 50;
+longueur_fusee = 50;
+function drawFusee (color){
+    ctx.beginPath();
+    ctx.rect(x_fusee, y_fusee, largeur_fusee, longueur_fusee);
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.closePath();
+}
+// ********************************************************************************************************************
+// **************************** Paramétrage des objets ENEMY **********************************************************
+// ********************************************************************************************************************
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+}
+// Premier ennemi
+largeur_ennemi_1 = 50;
+longueur_ennemi_1 = 50;
+x_ennemi_1 = canvas.width+largeur_ennemi_1;
+y_ennemi_1 = getRandomInt(canvas.height-largeur_ennemi_1);
+function drawEnemy_1 (color){
+    ctx.beginPath();
+    ctx.rect(x_ennemi_1, y_ennemi_1, largeur_ennemi_1, longueur_ennemi_1);
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.closePath();
+}
+// Second ennemi
+largeur_ennemi_2 = 50;
+longueur_ennemi_2 = 50;
+x_ennemi_2 = canvas.width+largeur_ennemi_2;
+y_ennemi_2 = getRandomInt(canvas.height-largeur_ennemi_2);
+function drawEnemy_2 (color){
+    ctx.beginPath();
+    ctx.rect(x_ennemi_2, y_ennemi_2, largeur_ennemi_2, longueur_ennemi_2);
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.closePath();
+}
+// ********************************************************************************************************************
 // ************************** Fonction MAIN - Dessin du Canvas ********************************************************
 // ********************************************************************************************************************
 function draw(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // On efface tout avant de tout retracer avec les new datas
-    drawFusee(x_fusee, y_fusee, rayon_fusee, angle_depart_fusee, angle_fin_fusee, sens_trace_fusee);
-    drawBouleRouge(x_boule_rouge, y_boule_rouge, rayon_boule_rouge, angle_depart_boule_rouge, angle_fin_boule_rouge, sens_trace_boule_rouge);
-    //drawBouleVerte(x_boule, y_boule, rayon_boule, angle_depart_boule, angle_fin_boule, sens_trace_boule);
-    // Gestion de la mobilité de la fusée
-    if (leftPressed && x_fusee > (rayon_fusee*2)){
+    drawFusee("white");
+    if (leftPressed && x_fusee > (largeur_fusee*2)){
         x_fusee -= 7;
     }
-    if (rightPressed && x_fusee < canvas.width-(rayon_fusee*2)){
+    if (rightPressed && x_fusee < canvas.width-(largeur_fusee*2)){
         x_fusee += 7;
     }
-    if (upPressed && y_fusee > (rayon_fusee*2)){
+    if (upPressed && y_fusee > (largeur_fusee*2)){
         y_fusee -= 7;
     }
-    if (downPressed && y_fusee < canvas.height-(rayon_fusee*2)){
+    if (downPressed && y_fusee < canvas.height-(largeur_fusee*2)){
         y_fusee += 7;
     }
-    // Génération des ennemis
-    x_boule_rouge -= 7;
+    drawFusee("blue");
 }
-setInterval(draw, 10); // On redessine toutes les 10 ms
+setInterval(draw, 10);
+
+function drawEnemy01(){
+    drawEnemy_1("white");
+    if (x_ennemi_1 <= (canvas.width+largeur_ennemi_1) && x_ennemi_1 >= (-largeur_ennemi_1)){
+        x_ennemi_1 -= 7;
+    } else {
+        x_ennemi_1 = canvas.width+largeur_ennemi_1;
+        y_ennemi_1 = getRandomInt(canvas.height-largeur_ennemi_1);
+    }
+    drawEnemy_1("red");
+}
+setInterval(drawEnemy01, 15);
+
+function drawEnemy02(){
+    drawEnemy_2("white");
+    if (x_ennemi_2 <= (canvas.width+largeur_ennemi_2) && x_ennemi_2 >= (-largeur_ennemi_2)){
+        x_ennemi_2 -= 7;
+    } else {
+        x_ennemi_2 = canvas.width+largeur_ennemi_2;
+        y_ennemi_2 = getRandomInt(canvas.height-largeur_ennemi_2);
+    }
+    drawEnemy_2("orange");
+}
+setInterval(drawEnemy02, 30);
