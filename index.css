@@ -3,3 +3,34 @@
     border-style: solid;
     border-radius: 15px;
 }
+.box{
+    display: flex;
+    padding: 10px 10px 0px 10px;
+}
+h1{
+    padding: 0px 100px 10px 20px;
+}
+h2{
+    padding: 0px 50px 0px 15px;
+}
+#rouge{
+    height: 40px;
+    width: 40px;
+    border: 3px;
+    border-style: solid;
+    background-color: red;
+}
+#orange{
+    height: 40px;
+    width: 40px;
+    border: 3px;
+    border-style: solid;
+    background-color: orange;
+}
+#vert{
+    height: 40px;
+    width: 40px;
+    border: 3px;
+    border-style: solid;
+    background-color: green;
+}

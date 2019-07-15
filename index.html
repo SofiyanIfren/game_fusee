@@ -4,7 +4,26 @@
         <link rel="stylesheet" type="text/css" href="index.css">
     </head>
     <body>
-        <canvas id="canvas" width="1250" height="750"></canvas>
+        <div class="box">
+            <div class="box">
+                <div id="rouge"></div>
+                <h2>Ennemi rapide (-5 pts)</h2>
+            </div>
+            <div class="box">
+                <div id="orange"></div>
+                <h2>Ennemi lent (-10 pts)</h2>
+            </div>
+            <div class="box">
+                <div id="vert"></div>
+                <h2>Bonus (+ 1pt)</h2>
+            </div>
+        </div>
+        <div class="box">
+            <h1 id="score">Score: </h1>
+            <h1 id="temps">Temps: </h1>
+            <h1 id="vies">Nombre de vies: </h1>
+        </div>
+        <canvas id="canvas" width="1250" height="500"></canvas>
         <script src="index.js"></script>
     </body>
 </html>
